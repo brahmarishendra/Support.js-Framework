@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support.js Framework - Vanilla JavaScript Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        
+        .example-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #007acc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            background-color: #005fa3;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-left: 4px solid #007acc;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .error {
+            background-color: #ffe8e8;
+            border-left-color: #cc0000;
+        }
+        
+        .success {
+            background-color: #e8f8e8;
+            border-left-color: #00cc00;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .color-demo {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+        
+        .performance-results {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .storage-item {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .validation-result {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .valid {
+            color: #00aa00;
+        }
+        
+        .invalid {
+            color: #aa0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Support.js Framework Demo</h1>
+        <p style="text-align: center; color: #666; font-size: 18px;">
+            Interactive demonstration of core utilities in vanilla JavaScript
+        </p>
+    </div>
+
+    <div class="container">
+        <h2>📅 Date Utilities</h2>
+        <div class="grid">
+            <div class="example-section">
+                <h3>Date Formatting</h3>
+                <div class="input-group">
+                    <label for="dateInput">Select Date:</label>
+                    <input type="date" id="dateInput" value="2023-06-15">
+                </div>
+                <div class="input-group">
+                    <label for="formatSelect">Format:</label>
+                    <select id="formatSelect">
+                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="MMM DD, YYYY">MMM DD, YYYY</option>
+                        <option value="MMMM DD, YYYY">MMMM DD, YYYY</option>
+                    </select>
+                </div>
+                <button onclick="formatDateExample()">Format Date</button>
+                <div id="dateResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="example-section">
+                <h3>Date Calculations</h3>
+                <div class="input-group">
+                    <label for="daysToAdd">Days to add/subtract:</label>
+                    <input type="number" id="daysToAdd" value="7">
+                </div>
+                <button onclick="addDaysExample()">Calculate Date</button>
+                <button onclick="checkTodayExample()">Is Today?</button>
+                <button onclick="calculateAgeExample()">Calculate Age</button>
+                <div id="dateCalcResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>🔤 String Utilities</h2>
+        <div class="grid">
+            <div class="example-section">
+                <h3>String Transformations</h3>
+                <div class="input-group">
+                    <label for="stringInput">Enter text:</label>
+                    <input type="text" id="stringInput" value="hello world example" placeholder="Enter text to transform">
+                </div>
+                <button onclick="transformString('capitalize')">Capitalize</button>
+                <button onclick="transformString('camelCase')">camelCase</button>
+                <button onclick="transformString('kebabCase')">kebab-case</button>
+                <button onclick="transformString('snakeCase')">snake_case</button>
+                <div id="stringResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="example-section">
+                <h3>String Operations</h3>
+                <div class="input-group">
+                    <label for="truncateInput">Text to truncate:</label>
+                    <input type="text" id="truncateInput" value="This is a very long text that needs to be truncated">
+                </div>
+                <div class="input-group">
+                    <label for="truncateLength">Length:</label>
+                    <input type="number" id="truncateLength" value="20">
+                </div>
+                <button onclick="truncateExample()">Truncate</button>
+                <button onclick="getInitialsExample()">Get Initials</button>
+                <button onclick="pluralizeExample()">Pluralize</button>
+                <div id="stringOpResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>🔢 Number Utilities</h2>
+        <div class="grid">
+            <div class="example-section">
+                <h3>Number Formatting</h3>
+                <div class="input-group">
+                    <label for="numberInput">Enter number:</label>
+                    <input type="number" id="numberInput" value="1234.567" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label for="currencySelect">Currency:</label>
+                    <select id="currencySelect">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                    </select>
+                </div>
+                <button onclick="formatCurrencyExample()">Format Currency</button>
+                <button onclick="formatPercentageExample()">Format Percentage</button>
+                <button onclick="formatBytesExample()">Format as Bytes</button>
+                <div id="numberResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="example-section">
+                <h3>Number Operations</h3>
+                <div class="input-group">
+                    <label for="numbersArray">Numbers (comma-separated):</label>
+                    <input type="text" id="numbersArray" value="1,2,3,4,5,6,7,8,9,10">
+                </div>
+                <button onclick="calculateStats()">Calculate Statistics</button>
+                <button onclick="generateRandomNumber()">Random Number</button>
+                <button onclick="roundToExample()">Round to 2 decimals</button>
+                <div id="numberOpResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>✅ Validation Utilities</h2>
+        <div class="example-section">
+            <h3>Input Validation</h3>
+            <div class="input-group">
+                <label for="emailInput">Email:</label>
+                <input type="text" id="emailInput" value="test@example.com" placeholder="Enter email">
+                <span id="emailValid" class="validation-result"></span>
+            </div>
+            <div class="input-group">
+                <label for="phoneInput">Phone:</label>
+                <input type="text" id="phoneInput" value="123-456-7890" placeholder="Enter phone">
+                <span id="phoneValid" class="validation-result"></span>
+            </div>
+            <div class="input-group">
+                <label for="urlInput">URL:</label>
+                <input type="text" id="urlInput" value="https://example.com" placeholder="Enter URL">
+                <span id="urlValid" class="validation-result"></span>
+            </div>
+            <div class="input-group">
+                <label for="passwordInput">Password:</label>
+                <input type="password" id="passwordInput" value="MyPassword123!" placeholder="Enter password">
+                <span id="passwordValid" class="validation-result"></span>
+            </div>
+            <button onclick="validateAllInputs()">Validate All</button>
+            <div id="validationResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>🎨 Color Utilities</h2>
+        <div class="grid">
+            <div class="example-section">
+                <h3>Color Conversion</h3>
+                <div class="input-group">
+                    <label for="colorInput">Hex Color:</label>
+                    <input type="color" id="colorInput" value="#3498db">
+                </div>
+                <button onclick="convertColor()">Convert & Analyze</button>
+                <button onclick="generateRandomColor()">Random Color</button>
+                <button onclick="generatePalette()">Generate Palette</button>
+                <div id="colorResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="example-section">
+                <h3>Color Manipulation</h3>
+                <div class="input-group">
+                    <label for="manipulateColor">Base Color:</label>
+                    <input type="color" id="manipulateColor" value="#e74c3c">
+                </div>
+                <button onclick="manipulateColor('lighten')">Lighten 20%</button>
+                <button onclick="manipulateColor('darken')">Darken 20%</button>
+                <button onclick="manipulateColor('saturate')">Saturate 30%</button>
+                <button onclick="manipulateColor('desaturate')">Desaturate 30%</button>
+                <div id="colorManipResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>💾 Storage Utilities</h2>
+        <div class="grid">
+            <div class="example-section">
+                <h3>Local Storage</h3>
+                <div class="input-group">
+                    <label for="storageKey">Key:</label>
+                    <input type="text" id="storageKey" value="demo-key" placeholder="Storage key">
+                </div>
+                <div class="input-group">
+                    <label for="storageValue">Value (JSON supported):</label>
+                    <textarea id="storageValue" rows="3" placeholder='{"name": "John", "age": 30}'></textarea>
+                </div>
+                <button onclick="setStorageItem()">Set Item</button>
+                <button onclick="getStorageItem()">Get Item</button>
+                <button onclick="removeStorageItem()">Remove Item</button>
+                <button onclick="listStorageItems()">List All</button>
+                <div id="storageResult" class="result" style="display: none;"></div>
+            </div>
+
+            <div class="example-section">
+                <h3>Storage Info</h3>
+                <button onclick="getStorageInfo()">Get Storage Info</button>
+                <button onclick="clearAllStorage()">Clear All Storage</button>
+                <div id="storageInfoResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>⚡ Performance Utilities</h2>
+        <div class="example-section">
+            <h3>Function Optimization</h3>
+            <button onclick="demoDebounce()">Test Debounce (300ms)</button>
+            <button onclick="demoThrottle()">Test Throttle (1000ms)</button>
+            <button onclick="demoMemoize()">Test Memoization</button>
+            <button onclick="measurePerformanceDemo()">Measure Performance</button>
+            <div id="performanceResult" class="result performance-results" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>🌐 Browser Utilities</h2>
+        <div class="example-section">
+            <h3>Browser Detection & Features</h3>
+            <button onclick="getBrowserInfo()">Get Browser Info</button>
+            <button onclick="checkFeatures()">Check Features</button>
+            <button onclick="getViewportInfo()">Get Viewport Info</button>
+            <button onclick="copyToClipboardDemo()">Copy to Clipboard</button>
+            <div id="browserResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📊 Logger Utilities</h2>
+        <div class="example-section">
+            <h3>Logging Demo</h3>
+            <button onclick="logMessages()">Log Test Messages</button>
+            <button onclick="exportLogs()">Export Logs</button>
+            <button onclick="clearLogs()">Clear Logs</button>
+            <div id="loggerResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Load Support.js Framework from CDN or local build -->
+    <script type="module">
+        // Import utilities from the framework
+        // Note: In a real implementation, you would import from the built package
+        window.SupportJS = {
+            // Date utilities
+            formatDate: (date, format) => {
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                
+                const pad = (num) => num.toString().padStart(2, '0');
+                
+                switch (format) {
+                    case 'YYYY-MM-DD':
+                        return `${year}-${pad(month)}-${pad(day)}`;
+                    case 'MM/DD/YYYY':
+                        return `${pad(month)}/${pad(day)}/${year}`;
+                    case 'DD/MM/YYYY':
+                        return `${pad(day)}/${pad(month)}/${year}`;
+                    case 'MMM DD, YYYY':
+                        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        return `${monthNames[month - 1]} ${day}, ${year}`;
+                    case 'MMMM DD, YYYY':
+                        const fullMonthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                                              'July', 'August', 'September', 'October', 'November', 'December'];
+                        return `${fullMonthNames[month - 1]} ${day}, ${year}`;
+                    default:
+                        return date.toISOString();
+                }
+            },
+            
+            addDays: (date, days) => {
+                const result = new Date(date);
+                result.setDate(result.getDate() + days);
+                return result;
+            },
+            
+            isToday: (date) => {
+                const today = new Date();
+                return date.getDate() === today.getDate() &&
+                       date.getMonth() === today.getMonth() &&
+                       date.getFullYear() === today.getFullYear();
+            },
+            
+            getAge: (birthDate) => {
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            },
+            
+            // String utilities
+            capitalize: (str) => str.replace(/\w\S*/g, (txt) => 
+                txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase()),
+            
+            camelCase: (str) => str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => 
+                index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, ''),
+            
+            kebabCase: (str) => str.replace(/([a-z])([A-Z])/g, '$1-$2')
+                                  .replace(/[\s_]+/g, '-').toLowerCase(),
+            
+            snakeCase: (str) => str.replace(/([a-z])([A-Z])/g, '$1_$2')
+                                  .replace(/[\s-]+/g, '_').toLowerCase(),
+            
+            truncate: (str, length, suffix = '...') => {
+                if (str.length <= length) return str;
+                return str.slice(0, length - suffix.length) + suffix;
+            },
+            
+            getInitials: (name, maxInitials = 2) => {
+                return name.split(' ')
+                          .map(word => word.charAt(0).toUpperCase())
+                          .slice(0, maxInitials)
+                          .join('');
+            },
+            
+            pluralize: (word, count) => {
+                if (count === 1) return word;
+                if (word.endsWith('y')) return word.slice(0, -1) + 'ies';
+                if (['s', 'sh', 'ch', 'x', 'z'].some(ending => word.endsWith(ending))) {
+                    return word + 'es';
+                }
+                return word + 's';
+            },
+            
+            // Number utilities
+            formatCurrency: (amount, currency = 'USD') => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: currency
+                }).format(amount);
+            },
+            
+            formatPercentage: (value, decimals = 2) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'percent',
+                    minimumFractionDigits: decimals,
+                    maximumFractionDigits: decimals
+                }).format(value);
+            },
+            
+            formatBytes: (bytes, decimals = 2) => {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+            },
+            
+            average: (numbers) => numbers.reduce((a, b) => a + b, 0) / numbers.length,
+            median: (numbers) => {
+                const sorted = [...numbers].sort((a, b) => a - b);
+                const middle = Math.floor(sorted.length / 2);
+                return sorted.length % 2 === 0 
+                    ? (sorted[middle - 1] + sorted[middle]) / 2 
+                    : sorted[middle];
+            },
+            sum: (numbers) => numbers.reduce((a, b) => a + b, 0),
+            min: (numbers) => Math.min(...numbers),
+            max: (numbers) => Math.max(...numbers),
+            roundTo: (number, decimals) => {
+                const factor = Math.pow(10, decimals);
+                return Math.round(number * factor) / factor;
+            },
+            
+            // Validation utilities
+            isEmail: (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()),
+            isPhone: (phone) => /^[\+]?[1-9][\d]{0,15}$/.test(phone.replace(/[\s\-\(\)\.]/g, '')),
+            isURL: (url) => /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(url.trim()),
+            
+            validatePasswordStrength: (password) => {
+                const feedback = [];
+                let score = 0;
+                
+                if (password.length < 8) feedback.push('Password must be at least 8 characters long');
+                else score++;
+                
+                if (!/[a-z]/.test(password)) feedback.push('Password must contain at least one lowercase letter');
+                else score++;
+                
+                if (!/[A-Z]/.test(password)) feedback.push('Password must contain at least one uppercase letter');
+                else score++;
+                
+                if (!/\d/.test(password)) feedback.push('Password must contain at least one number');
+                else score++;
+                
+                if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) feedback.push('Password must contain at least one special character');
+                else score++;
+                
+                return { score: Math.max(0, score - 1), feedback, isValid: score >= 4 };
+            },
+            
+            // Color utilities
+            hexToRgb: (hex) => {
+                const match = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+                return match ? {
+                    r: parseInt(match[1], 16),
+                    g: parseInt(match[2], 16),
+                    b: parseInt(match[3], 16)
+                } : null;
+            },
+            
+            rgbToHex: (r, g, b) => {
+                const toHex = (c) => {
+                    const hex = Math.round(Math.max(0, Math.min(255, c))).toString(16);
+                    return hex.length === 1 ? '0' + hex : hex;
+                };
+                return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+            },
+            
+            lighten: (hex, percentage) => {
+                const rgb = window.SupportJS.hexToRgb(hex);
+                if (!rgb) return hex;
+                
+                return window.SupportJS.rgbToHex(
+                    Math.min(255, rgb.r + Math.round(255 * percentage / 100)),
+                    Math.min(255, rgb.g + Math.round(255 * percentage / 100)),
+                    Math.min(255, rgb.b + Math.round(255 * percentage / 100))
+                );
+            },
+            
+            darken: (hex, percentage) => {
+                const rgb = window.SupportJS.hexToRgb(hex);
+                if (!rgb) return hex;
+                
+                return window.SupportJS.rgbToHex(
+                    Math.max(0, rgb.r - Math.round(255 * percentage / 100)),
+                    Math.max(0, rgb.g - Math.round(255 * percentage / 100)),
+                    Math.max(0, rgb.b - Math.round(255 * percentage / 100))
+                );
+            },
+            
+            randomColor: () => {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            },
+            
+            // Storage utilities
+            LocalStorage: {
+                set: (key, value) => {
+                    try {
+                        localStorage.setItem(key, JSON.stringify(value));
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                },
+                get: (key) => {
+                    try {
+                        const item = localStorage.getItem(key);
+                        return item ? JSON.parse(item) : null;
+                    } catch {
+                        return null;
+                    }
+                },
+                remove: (key) => {
+                    try {
+                        localStorage.removeItem(key);
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                },
+                clear: () => {
+                    try {
+                        localStorage.clear();
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                },
+                getKeys: () => Object.keys(localStorage),
+                getSize: () => {
+                    let total = 0;
+                    for (const key in localStorage) {
+                        if (localStorage.hasOwnProperty(key)) {
+                            total += localStorage[key].length + key.length;
+                        }
+                    }
+                    return total;
+                }
+            },
+            
+            // Performance utilities
+            debounce: (func, delay) => {
+                let timeoutId;
+                return (...args) => {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => func(...args), delay);
+                };
+            },
+            
+            throttle: (func, limit) => {
+                let inThrottle;
+                return (...args) => {
+                    if (!inThrottle) {
+                        func(...args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                };
+            },
+            
+            memoize: (func) => {
+                const cache = new Map();
+                return (...args) => {
+                    const key = JSON.stringify(args);
+                    if (cache.has(key)) {
+                        return cache.get(key);
+                    }
+                    const result = func(...args);
+                    cache.set(key, result);
+                    return result;
+                };
+            },
+            
+            measurePerformance: (func, label) => {
+                return (...args) => {
+                    const start = performance.now();
+                    const result = func(...args);
+                    const end = performance.now();
+                    console.log(`${label}: ${(end - start).toFixed(2)}ms`);
+                    return result;
+                };
+            },
+            
+            // Browser utilities
+            getBrowserInfo: () => {
+                const userAgent = navigator.userAgent;
+                let name = 'Unknown', version = 'Unknown';
+                
+                if (userAgent.indexOf('Chrome') > -1) {
+                    name = 'Chrome';
+                    version = userAgent.match(/Chrome\/(\d+)/)?.[1] || 'Unknown';
+                } else if (userAgent.indexOf('Firefox') > -1) {
+                    name = 'Firefox';
+                    version = userAgent.match(/Firefox\/(\d+)/)?.[1] || 'Unknown';
+                } else if (userAgent.indexOf('Safari') > -1) {
+                    name = 'Safari';
+                    version = userAgent.match(/Safari\/(\d+)/)?.[1] || 'Unknown';
+                }
+                
+                return {
+                    name,
+                    version,
+                    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent),
+                    userAgent
+                };
+            },
+            
+            getViewportSize: () => ({
+                width: Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0),
+                height: Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+            }),
+            
+            copyToClipboard: async (text) => {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    return true;
+                } catch {
+                    return false;
+                }
+            },
+            
+            // Logger
+            createLogger: () => {
+                const entries = [];
+                return {
+                    debug: (msg, data) => entries.push({ level: 'debug', message: msg, data, timestamp: new Date() }),
+                    info: (msg, data) => entries.push({ level: 'info', message: msg, data, timestamp: new Date() }),
+                    warn: (msg, data) => entries.push({ level: 'warn', message: msg, data, timestamp: new Date() }),
+                    error: (msg, data) => entries.push({ level: 'error', message: msg, data, timestamp: new Date() }),
+                    getEntries: () => [...entries],
+                    clearEntries: () => entries.length = 0,
+                    exportLogs: () => JSON.stringify(entries, null, 2)
+                };
+            }
+        };
+        
+        // Initialize logger
+        window.logger = window.SupportJS.createLogger();
+    </script>
+
+    <script>
+        // Date utility functions
+        function formatDateExample() {
+            const dateInput = document.getElementById('dateInput').value;
+            const format = document.getElementById('formatSelect').value;
+            const date = new Date(dateInput);
+            
+            const formatted = window.SupportJS.formatDate(date, format);
+            
+            document.getElementById('dateResult').innerHTML = `
+                <strong>Formatted Date:</strong> ${formatted}
+            `;
+            document.getElementById('dateResult').style.display = 'block';
+        }
+        
+        function addDaysExample() {
+            const dateInput = document.getElementById('dateInput').value;
+            const days = parseInt(document.getElementById('daysToAdd').value);
+            const date = new Date(dateInput);
+            
+            const newDate = window.SupportJS.addDays(date, days);
+            
+            document.getElementById('dateCalcResult').innerHTML = `
+                <strong>Original:</strong> ${window.SupportJS.formatDate(date, 'YYYY-MM-DD')}<br>
+                <strong>After ${days > 0 ? 'adding' : 'subtracting'} ${Math.abs(days)} days:</strong> ${window.SupportJS.formatDate(newDate, 'YYYY-MM-DD')}
+            `;
+            document.getElementById('dateCalcResult').style.display = 'block';
+        }
+        
+        function checkTodayExample() {
+            const dateInput = document.getElementById('dateInput').value;
+            const date = new Date(dateInput);
+            const isToday = window.SupportJS.isToday(date);
+            
+            document.getElementById('dateCalcResult').innerHTML = `
+                <strong>Is ${window.SupportJS.formatDate(date, 'YYYY-MM-DD')} today?</strong> ${isToday ? 'Yes' : 'No'}
+            `;
+            document.getElementById('dateCalcResult').style.display = 'block';
+        }
+        
+        function calculateAgeExample() {
+            const dateInput = document.getElementById('dateInput').value;
+            const birthDate = new Date(dateInput);
+            const age = window.SupportJS.getAge(birthDate);
+            
+            document.getElementById('dateCalcResult').innerHTML = `
+                <strong>Birth Date:</strong> ${window.SupportJS.formatDate(birthDate, 'YYYY-MM-DD')}<br>
+                <strong>Age:</strong> ${age} years old
+            `;
+            document.getElementById('dateCalcResult').style.display = 'block';
+        }
+        
+        // String utility functions
+        function transformString(type) {
+            const input = document.getElementById('stringInput').value;
+            let result;
+            
+            switch(type) {
+                case 'capitalize':
+                    result = window.SupportJS.capitalize(input);
+                    break;
+                case 'camelCase':
+                    result = window.SupportJS.camelCase(input);
+                    break;
+                case 'kebabCase':
+                    result = window.SupportJS.kebabCase(input);
+                    break;
+                case 'snakeCase':
+                    result = window.SupportJS.snakeCase(input);
+                    break;
+            }
+            
+            document.getElementById('stringResult').innerHTML = `
+                <strong>Original:</strong> "${input}"<br>
+                <strong>${type}:</strong> "${result}"
+            `;
+            document.getElementById('stringResult').style.display = 'block';
+        }
+        
+        function truncateExample() {
+            const input = document.getElementById('truncateInput').value;
+            const length = parseInt(document.getElementById('truncateLength').value);
+            const result = window.SupportJS.truncate(input, length);
+            
+            document.getElementById('stringOpResult').innerHTML = `
+                <strong>Original:</strong> "${input}"<br>
+                <strong>Truncated (${length} chars):</strong> "${result}"
+            `;
+            document.getElementById('stringOpResult').style.display = 'block';
+        }
+        
+        function getInitialsExample() {
+            const input = document.getElementById('stringInput').value;
+            const initials = window.SupportJS.getInitials(input);
+            
+            document.getElementById('stringOpResult').innerHTML = `
+                <strong>Name:</strong> "${input}"<br>
+                <strong>Initials:</strong> "${initials}"
+            `;
+            document.getElementById('stringOpResult').style.display = 'block';
+        }
+        
+        function pluralizeExample() {
+            const input = document.getElementById('stringInput').value.split(' ')[0]; // Take first word
+            const singular = window.SupportJS.pluralize(input, 1);
+            const plural = window.SupportJS.pluralize(input, 2);
+            
+            document.getElementById('stringOpResult').innerHTML = `
+                <strong>Word:</strong> "${input}"<br>
+                <strong>Singular:</strong> "${singular}"<br>
+                <strong>Plural:</strong> "${plural}"
+            `;
+            document.getElementById('stringOpResult').style.display = 'block';
+        }
+        
+        // Number utility functions
+        function formatCurrencyExample() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const currency = document.getElementById('currencySelect').value;
+            const result = window.SupportJS.formatCurrency(number, currency);
+            
+            document.getElementById('numberResult').innerHTML = `
+                <strong>Number:</strong> ${number}<br>
+                <strong>Currency (${currency}):</strong> ${result}
+            `;
+            document.getElementById('numberResult').style.display = 'block';
+        }
+        
+        function formatPercentageExample() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const result = window.SupportJS.formatPercentage(number / 100);
+            
+            document.getElementById('numberResult').innerHTML = `
+                <strong>Number:</strong> ${number}<br>
+                <strong>Percentage:</strong> ${result}
+            `;
+            document.getElementById('numberResult').style.display = 'block';
+        }
+        
+        function formatBytesExample() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const result = window.SupportJS.formatBytes(number);
+            
+            document.getElementById('numberResult').innerHTML = `
+                <strong>Bytes:</strong> ${number}<br>
+                <strong>Formatted:</strong> ${result}
+            `;
+            document.getElementById('numberResult').style.display = 'block';
+        }
+        
+        function calculateStats() {
+            const input = document.getElementById('numbersArray').value;
+            const numbers = input.split(',').map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+            
+            if (numbers.length === 0) {
+                document.getElementById('numberOpResult').innerHTML = '<span class="error">Please enter valid numbers</span>';
+                document.getElementById('numberOpResult').style.display = 'block';
+                return;
+            }
+            
+            const stats = {
+                count: numbers.length,
+                sum: window.SupportJS.sum(numbers),
+                average: window.SupportJS.average(numbers),
+                median: window.SupportJS.median(numbers),
+                min: window.SupportJS.min(numbers),
+                max: window.SupportJS.max(numbers)
+            };
+            
+            document.getElementById('numberOpResult').innerHTML = `
+                <strong>Numbers:</strong> [${numbers.join(', ')}]<br>
+                <strong>Count:</strong> ${stats.count}<br>
+                <strong>Sum:</strong> ${stats.sum}<br>
+                <strong>Average:</strong> ${stats.average.toFixed(2)}<br>
+                <strong>Median:</strong> ${stats.median}<br>
+                <strong>Min:</strong> ${stats.min}<br>
+                <strong>Max:</strong> ${stats.max}
+            `;
+            document.getElementById('numberOpResult').style.display = 'block';
+        }
+        
+        function generateRandomNumber() {
+            const min = 1;
+            const max = 100;
+            const random = Math.floor(Math.random() * (max - min + 1)) + min;
+            
+            document.getElementById('numberOpResult').innerHTML = `
+                <strong>Random number (${min}-${max}):</strong> ${random}
+            `;
+            document.getElementById('numberOpResult').style.display = 'block';
+        }
+        
+        function roundToExample() {
+            const number = parseFloat(document.getElementById('numberInput').value);
+            const rounded = window.SupportJS.roundTo(number, 2);
+            
+            document.getElementById('numberOpResult').innerHTML = `
+                <strong>Original:</strong> ${number}<br>
+                <strong>Rounded to 2 decimals:</strong> ${rounded}
+            `;
+            document.getElementById('numberOpResult').style.display = 'block';
+        }
+        
+        // Validation functions
+        function validateAllInputs() {
+            const email = document.getElementById('emailInput').value;
+            const phone = document.getElementById('phoneInput').value;
+            const url = document.getElementById('urlInput').value;
+            const password = document.getElementById('passwordInput').value;
+            
+            const emailValid = window.SupportJS.isEmail(email);
+            const phoneValid = window.SupportJS.isPhone(phone);
+            const urlValid = window.SupportJS.isURL(url);
+            const passwordStrength = window.SupportJS.validatePasswordStrength(password);
+            
+            // Update individual indicators
+            document.getElementById('emailValid').textContent = emailValid ? '✓ Valid' : '✗ Invalid';
+            document.getElementById('emailValid').className = `validation-result ${emailValid ? 'valid' : 'invalid'}`;
+            
+            document.getElementById('phoneValid').textContent = phoneValid ? '✓ Valid' : '✗ Invalid';
+            document.getElementById('phoneValid').className = `validation-result ${phoneValid ? 'valid' : 'invalid'}`;
+            
+            document.getElementById('urlValid').textContent = urlValid ? '✓ Valid' : '✗ Invalid';
+            document.getElementById('urlValid').className = `validation-result ${urlValid ? 'valid' : 'invalid'}`;
+            
+            document.getElementById('passwordValid').textContent = passwordStrength.isValid ? '✓ Strong' : '✗ Weak';
+            document.getElementById('passwordValid').className = `validation-result ${passwordStrength.isValid ? 'valid' : 'invalid'}`;
+            
+            // Show detailed results
+            let result = `
+                <h4>Validation Results:</h4>
+                <strong>Email:</strong> ${emailValid ? '✓ Valid' : '✗ Invalid'}<br>
+                <strong>Phone:</strong> ${phoneValid ? '✓ Valid' : '✗ Invalid'}<br>
+                <strong>URL:</strong> ${urlValid ? '✓ Valid' : '✗ Invalid'}<br>
+                <strong>Password Strength:</strong> ${passwordStrength.score}/4 (${passwordStrength.isValid ? 'Strong' : 'Weak'})<br>
+            `;
+            
+            if (passwordStrength.feedback.length > 0) {
+                result += `<strong>Password Feedback:</strong><br>`;
+                passwordStrength.feedback.forEach(feedback => {
+                    result += `• ${feedback}<br>`;
+                });
+            }
+            
+            document.getElementById('validationResult').innerHTML = result;
+            document.getElementById('validationResult').style.display = 'block';
+        }
+        
+        // Add real-time validation
+        ['emailInput', 'phoneInput', 'urlInput', 'passwordInput'].forEach(id => {
+            document.getElementById(id).addEventListener('input', validateAllInputs);
+        });
+        
+        // Color utility functions
+        function convertColor() {
+            const hex = document.getElementById('colorInput').value;
+            const rgb = window.SupportJS.hexToRgb(hex);
+            
+            if (rgb) {
+                document.getElementById('colorResult').innerHTML = `
+                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                        <div class="color-demo" style="background-color: ${hex};"></div>
+                        <strong>Color Analysis</strong>
+                    </div>
+                    <strong>Hex:</strong> ${hex}<br>
+                    <strong>RGB:</strong> rgb(${rgb.r}, ${rgb.g}, ${rgb.b})<br>
+                    <strong>Red:</strong> ${rgb.r}<br>
+                    <strong>Green:</strong> ${rgb.g}<br>
+                    <strong>Blue:</strong> ${rgb.b}
+                `;
+            } else {
+                document.getElementById('colorResult').innerHTML = '<span class="error">Invalid color</span>';
+            }
+            document.getElementById('colorResult').style.display = 'block';
+        }
+        
+        function generateRandomColor() {
+            const colors = [];
+            for (let i = 0; i < 5; i++) {
+                colors.push(window.SupportJS.randomColor());
+            }
+            
+            let result = '<strong>Random Colors:</strong><br>';
+            colors.forEach(color => {
+                result += `
+                    <div style="display: inline-flex; align-items: center; margin: 5px;">
+                        <div class="color-demo" style="background-color: ${color};"></div>
+                        <span>${color}</span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('colorResult').innerHTML = result;
+            document.getElementById('colorResult').style.display = 'block';
+        }
+        
+        function generatePalette() {
+            const baseColor = document.getElementById('colorInput').value;
+            const colors = [baseColor];
+            
+            // Generate variations
+            colors.push(window.SupportJS.lighten(baseColor, 20));
+            colors.push(window.SupportJS.lighten(baseColor, 40));
+            colors.push(window.SupportJS.darken(baseColor, 20));
+            colors.push(window.SupportJS.darken(baseColor, 40));
+            
+            let result = '<strong>Color Palette:</strong><br>';
+            const labels = ['Original', 'Light +20%', 'Light +40%', 'Dark -20%', 'Dark -40%'];
+            
+            colors.forEach((color, index) => {
+                result += `
+                    <div style="display: flex; align-items: center; margin: 5px 0;">
+                        <div class="color-demo" style="background-color: ${color};"></div>
+                        <span><strong>${labels[index]}:</strong> ${color}</span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('colorResult').innerHTML = result;
+            document.getElementById('colorResult').style.display = 'block';
+        }
+        
+        function manipulateColor(operation) {
+            const color = document.getElementById('manipulateColor').value;
+            let result;
+            let description;
+            
+            switch(operation) {
+                case 'lighten':
+                    result = window.SupportJS.lighten(color, 20);
+                    description = 'Lightened by 20%';
+                    break;
+                case 'darken':
+                    result = window.SupportJS.darken(color, 20);
+                    description = 'Darkened by 20%';
+                    break;
+                case 'saturate':
+                    result = color; // Would need full HSL implementation
+                    description = 'Saturated by 30% (demo)';
+                    break;
+                case 'desaturate':
+                    result = color; // Would need full HSL implementation
+                    description = 'Desaturated by 30% (demo)';
+                    break;
+            }
+            
+            document.getElementById('colorManipResult').innerHTML = `
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <div class="color-demo" style="background-color: ${color};"></div>
+                    <span style="margin: 0 10px;">→</span>
+                    <div class="color-demo" style="background-color: ${result};"></div>
+                    <span style="margin-left: 10px;"><strong>${description}</strong></span>
+                </div>
+                <strong>Original:</strong> ${color}<br>
+                <strong>Result:</strong> ${result}
+            `;
+            document.getElementById('colorManipResult').style.display = 'block';
+        }
+        
+        // Storage utility functions
+        function setStorageItem() {
+            const key = document.getElementById('storageKey').value;
+            const valueStr = document.getElementById('storageValue').value;
+            
+            if (!key) {
+                document.getElementById('storageResult').innerHTML = '<span class="error">Please enter a key</span>';
+                document.getElementById('storageResult').style.display = 'block';
+                return;
+            }
+            
+            let value;
+            try {
+                // Try to parse as JSON, fall back to string
+                value = valueStr ? JSON.parse(valueStr) : valueStr;
+            } catch {
+                value = valueStr;
+            }
+            
+            const success = window.SupportJS.LocalStorage.set(key, value);
+            
+            document.getElementById('storageResult').innerHTML = success 
+                ? `<span class="success">✓ Stored "${key}" successfully</span>`
+                : `<span class="error">✗ Failed to store "${key}"</span>`;
+            document.getElementById('storageResult').style.display = 'block';
+        }
+        
+        function getStorageItem() {
+            const key = document.getElementById('storageKey').value;
+            
+            if (!key) {
+                document.getElementById('storageResult').innerHTML = '<span class="error">Please enter a key</span>';
+                document.getElementById('storageResult').style.display = 'block';
+                return;
+            }
+            
+            const value = window.SupportJS.LocalStorage.get(key);
+            
+            if (value !== null) {
+                document.getElementById('storageResult').innerHTML = `
+                    <strong>Key:</strong> "${key}"<br>
+                    <strong>Value:</strong> <pre>${JSON.stringify(value, null, 2)}</pre>
+                `;
+            } else {
+                document.getElementById('storageResult').innerHTML = `<span class="error">Key "${key}" not found</span>`;
+            }
+            document.getElementById('storageResult').style.display = 'block';
+        }
+        
+        function removeStorageItem() {
+            const key = document.getElementById('storageKey').value;
+            
+            if (!key) {
+                document.getElementById('storageResult').innerHTML = '<span class="error">Please enter a key</span>';
+                document.getElementById('storageResult').style.display = 'block';
+                return;
+            }
+            
+            const success = window.SupportJS.LocalStorage.remove(key);
+            
+            document.getElementById('storageResult').innerHTML = success 
+                ? `<span class="success">✓ Removed "${key}" successfully</span>`
+                : `<span class="error">✗ Failed to remove "${key}"</span>`;
+            document.getElementById('storageResult').style.display = 'block';
+        }
+        
+        function listStorageItems() {
+            const keys = window.SupportJS.LocalStorage.getKeys();
+            
+            if (keys.length === 0) {
+                document.getElementById('storageResult').innerHTML = '<span>No items in storage</span>';
+            } else {
+                let result = '<strong>Storage Items:</strong><br>';
+                keys.forEach(key => {
+                    const value = window.SupportJS.LocalStorage.get(key);
+                    result += `
+                        <div class="storage-item">
+                            <strong>${key}:</strong> ${JSON.stringify(value)}
+                        </div>
+                    `;
+                });
+                document.getElementById('storageResult').innerHTML = result;
+            }
+            document.getElementById('storageResult').style.display = 'block';
+        }
+        
+        function getStorageInfo() {
+            const keys = window.SupportJS.LocalStorage.getKeys();
+            const size = window.SupportJS.LocalStorage.getSize();
+            
+            document.getElementById('storageInfoResult').innerHTML = `
+                <strong>Storage Information:</strong><br>
+                <strong>Total Items:</strong> ${keys.length}<br>
+                <strong>Estimated Size:</strong> ${window.SupportJS.formatBytes(size)}<br>
+                <strong>Available:</strong> ${window.SupportJS.LocalStorage ? 'Yes' : 'No'}
+            `;
+            document.getElementById('storageInfoResult').style.display = 'block';
+        }
+        
+        function clearAllStorage() {
+            const success = window.SupportJS.LocalStorage.clear();
+            
+            document.getElementById('storageInfoResult').innerHTML = success 
+                ? '<span class="success">✓ Storage cleared successfully</span>'
+                : '<span class="error">✗ Failed to clear storage</span>';
+            document.getElementById('storageInfoResult').style.display = 'block';
+        }
+        
+        // Performance utility functions
+        let debounceCounter = 0;
+        let throttleCounter = 0;
+        
+        function demoDebounce() {
+            const debouncedFn = window.SupportJS.debounce(() => {
+                debounceCounter++;
+                document.getElementById('performanceResult').innerHTML += `Debounced function called #${debounceCounter}<br>`;
+            }, 300);
+            
+            // Call multiple times quickly
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => debouncedFn(), i * 50);
+            }
+            
+            document.getElementById('performanceResult').innerHTML = 'Calling debounced function 5 times quickly (300ms delay)...<br>';
+            document.getElementById('performanceResult').style.display = 'block';
+        }
+        
+        function demoThrottle() {
+            const throttledFn = window.SupportJS.throttle(() => {
+                throttleCounter++;
+                document.getElementById('performanceResult').innerHTML += `Throttled function called #${throttleCounter}<br>`;
+            }, 1000);
+            
+            // Call multiple times quickly
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => throttledFn(), i * 100);
+            }
+            
+            document.getElementById('performanceResult').innerHTML = 'Calling throttled function 10 times quickly (1000ms limit)...<br>';
+            document.getElementById('performanceResult').style.display = 'block';
+        }
+        
+        function demoMemoize() {
+            const expensiveFunction = (n) => {
+                let result = 0;
+                for (let i = 0; i < n * 1000000; i++) {
+                    result += i;
+                }
+                return result;
+            };
+            
+            const memoizedFn = window.SupportJS.memoize(expensiveFunction);
+            
+            const start1 = performance.now();
+            const result1 = memoizedFn(100);
+            const time1 = performance.now() - start1;
+            
+            const start2 = performance.now();
+            const result2 = memoizedFn(100); // Should be cached
+            const time2 = performance.now() - start2;
+            
+            document.getElementById('performanceResult').innerHTML = `
+                <strong>Memoization Demo:</strong><br>
+                First call (n=100): ${time1.toFixed(2)}ms<br>
+                Second call (cached): ${time2.toFixed(2)}ms<br>
+                Speed improvement: ${(time1 / time2).toFixed(0)}x faster<br>
+                Result: ${result1}
+            `;
+            document.getElementById('performanceResult').style.display = 'block';
+        }
+        
+        function measurePerformanceDemo() {
+            const testFunction = () => {
+                let sum = 0;
+                for (let i = 0; i < 1000000; i++) {
+                    sum += Math.random();
+                }
+                return sum;
+            };
+            
+            const measuredFn = window.SupportJS.measurePerformance(testFunction, 'Random sum calculation');
+            
+            const result = measuredFn();
+            
+            document.getElementById('performanceResult').innerHTML = `
+                <strong>Performance Measurement:</strong><br>
+                Function executed and timed (check console for details)<br>
+                Result: ${result.toFixed(2)}
+            `;
+            document.getElementById('performanceResult').style.display = 'block';
+        }
+        
+        // Browser utility functions
+        function getBrowserInfo() {
+            const info = window.SupportJS.getBrowserInfo();
+            
+            document.getElementById('browserResult').innerHTML = `
+                <strong>Browser Information:</strong><br>
+                <strong>Name:</strong> ${info.name}<br>
+                <strong>Version:</strong> ${info.version}<br>
+                <strong>Mobile:</strong> ${info.isMobile ? 'Yes' : 'No'}<br>
+                <strong>User Agent:</strong> ${info.userAgent}
+            `;
+            document.getElementById('browserResult').style.display = 'block';
+        }
+        
+        function checkFeatures() {
+            const features = {
+                'Local Storage': typeof Storage !== 'undefined',
+                'Session Storage': typeof sessionStorage !== 'undefined',
+                'Geolocation': 'geolocation' in navigator,
+                'Notification': 'Notification' in window,
+                'Service Worker': 'serviceWorker' in navigator,
+                'WebSocket': 'WebSocket' in window,
+                'Canvas': !!document.createElement('canvas').getContext,
+                'WebGL': !!document.createElement('canvas').getContext('webgl')
+            };
+            
+            let result = '<strong>Browser Feature Support:</strong><br>';
+            Object.entries(features).forEach(([feature, supported]) => {
+                result += `<strong>${feature}:</strong> ${supported ? '✓ Supported' : '✗ Not supported'}<br>`;
+            });
+            
+            document.getElementById('browserResult').innerHTML = result;
+            document.getElementById('browserResult').style.display = 'block';
+        }
+        
+        function getViewportInfo() {
+            const viewport = window.SupportJS.getViewportSize();
+            
+            document.getElementById('browserResult').innerHTML = `
+                <strong>Viewport Information:</strong><br>
+                <strong>Width:</strong> ${viewport.width}px<br>
+                <strong>Height:</strong> ${viewport.height}px<br>
+                <strong>Aspect Ratio:</strong> ${(viewport.width / viewport.height).toFixed(2)}<br>
+                <strong>Device Pixel Ratio:</strong> ${window.devicePixelRatio || 1}
+            `;
+            document.getElementById('browserResult').style.display = 'block';
+        }
+        
+        function copyToClipboardDemo() {
+            const text = 'This text was copied using Support.js Framework!';
+            
+            window.SupportJS.copyToClipboard(text).then(success => {
+                document.getElementById('browserResult').innerHTML = success 
+                    ? `<span class="success">✓ Text copied to clipboard: "${text}"</span>`
+                    : `<span class="error">✗ Failed to copy to clipboard</span>`;
+                document.getElementById('browserResult').style.display = 'block';
+            });
+        }
+        
+        // Logger functions
+        function logMessages() {
+            window.logger.debug('This is a debug message', { type: 'debug', timestamp: Date.now() });
+            window.logger.info('This is an info message', { type: 'info', user: 'demo' });
+            window.logger.warn('This is a warning message', { type: 'warning', level: 'moderate' });
+            window.logger.error('This is an error message', { type: 'error', code: 500 });
+            
+            const entries = window.logger.getEntries();
+            
+            let result = '<strong>Log Entries:</strong><br>';
+            entries.forEach((entry, index) => {
+                result += `
+                    <div style="margin: 5px 0; padding: 5px; border-left: 3px solid ${getLogColor(entry.level)};">
+                        <strong>[${entry.level.toUpperCase()}]</strong> ${entry.message}<br>
+                        <small>Time: ${entry.timestamp.toLocaleTimeString()}</small>
+                        ${entry.data ? `<br><small>Data: ${JSON.stringify(entry.data)}</small>` : ''}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('loggerResult').innerHTML = result;
+            document.getElementById('loggerResult').style.display = 'block';
+        }
+        
+        function getLogColor(level) {
+            switch(level) {
+                case 'debug': return '#6c757d';
+                case 'info': return '#007acc';
+                case 'warn': return '#ffc107';
+                case 'error': return '#dc3545';
+                default: return '#6c757d';
+            }
+        }
+        
+        function exportLogs() {
+            const logs = window.logger.exportLogs();
+            
+            // Create downloadable file
+            const blob = new Blob([logs], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `support-js-logs-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('loggerResult').innerHTML = `
+                <span class="success">✓ Logs exported successfully</span><br>
+                <strong>Download started:</strong> support-js-logs-${new Date().toISOString().split('T')[0]}.json
+            `;
+            document.getElementById('loggerResult').style.display = 'block';
+        }
+        
+        function clearLogs() {
+            window.logger.clearEntries();
+            
+            document.getElementById('loggerResult').innerHTML = '<span class="success">✓ All logs cleared</span>';
+            document.getElementById('loggerResult').style.display = 'block';
+        }
+        
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateInput').value = today;
+            
+            // Log initial message
+            window.logger.info('Support.js Framework demo initialized', { 
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            });
+            
+            console.log('🚀 Support.js Framework Demo Ready!');
+            console.log('Framework utilities available at window.SupportJS');
+            console.log('Logger available at window.logger');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support.js Framework - Complete Documentation</title>
+    <meta name="description" content="Comprehensive JavaScript utility framework with React, Next.js, and Angular integrations">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #7f8c8d;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .install-command {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 1.1rem;
+            margin: 0 auto;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            user-select: all;
+            cursor: pointer;
+        }
+
+        .install-command:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .section {
+            background: var(--white);
+            margin: 2rem 0;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        .install-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .install-option {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .install-option:hover {
+            border-color: var(--primary);
+            background: var(--white);
+        }
+
+        .install-option h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .install-option code {
+            background: var(--dark);
+            color: var(--white);
+            padding: 0.75rem;
+            border-radius: 4px;
+            display: block;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            user-select: all;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .install-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Support.js Framework</h1>
+            <p>Comprehensive JavaScript utility framework with React, Next.js, and Angular integrations</p>
+            <div class="install-command" onclick="copyToClipboard(this.textContent)">
+                npm install support-js-framework react react-dom next @angular/core @angular/common rxjs
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2>Installation Options</h2>
+            <div class="install-grid">
+                <div class="install-option">
+                    <h4>All Frameworks</h4>
+                    <code>npm install support-js-framework react react-dom next @angular/core @angular/common rxjs</code>
+                </div>
+                <div class="install-option">
+                    <h4>React Only</h4>
+                    <code>npm install support-js-framework react react-dom</code>
+                </div>
+                <div class="install-option">
+                    <h4>Next.js Only</h4>
+                    <code>npm install support-js-framework react react-dom next</code>
+                </div>
+                <div class="install-option">
+                    <h4>Angular Only</h4>
+                    <code>npm install support-js-framework @angular/core @angular/common rxjs</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Quick Start</h2>
+            <div class="code-block">
+import { formatDate, formatCurrency, isEmail } from 'support-js-framework/core';
+import { useLocalStorage, useDebounce } from 'support-js-framework/react';
+
+// Core utilities work everywhere
+const today = formatDate(new Date(), 'YYYY-MM-DD');
+const price = formatCurrency(1234.56, { currency: 'USD' });
+const valid = isEmail('user@example.com');
+
+// React hooks for enhanced functionality
+function App() {
+  const [value, setValue] = useLocalStorage('key', 'default');
+  const debouncedValue = useDebounce(value, 300);
+  return &lt;div&gt;{debouncedValue}&lt;/div&gt;;
+}
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>Core Utilities</h4>
+                    <ul>
+                        <li>Date formatting and manipulation</li>
+                        <li>String processing utilities</li>
+                        <li>Array operations</li>
+                        <li>Object manipulation</li>
+                        <li>Validation helpers</li>
+                        <li>Number formatting</li>
+                        <li>Performance optimization</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>React Integration</h4>
+                    <ul>
+                        <li>Custom hooks</li>
+                        <li>Optimized components</li>
+                        <li>State management</li>
+                        <li>Performance monitoring</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Next.js Integration</h4>
+                    <ul>
+                        <li>SSR-safe utilities</li>
+                        <li>SEO helpers</li>
+                        <li>API utilities</li>
+                        <li>Performance tools</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>Angular Integration</h4>
+                    <ul>
+                        <li>Injectable services</li>
+                        <li>Custom pipes</li>
+                        <li>RxJS integration</li>
+                        <li>Form validation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                event.target.style.background = 'rgba(46, 204, 113, 0.3)';
+                setTimeout(() => {
+                    event.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+</html>
