@@ -21,7 +21,6 @@ If you discover a security vulnerability in **Support.js-Framework**, we strongl
 
 - Please report any vulnerabilities by opening a confidential issue at: [https://github.com/Support.js/Framework/security/advisories](https://github.com/Support.js/Framework/security/advisories)
 - You may also email us directly at: **security@supportjs.dev**
-- We aim to respond within **72 hours** and will work with you to assess the issue and plan a fix if necessary.
 
 **Note:** Do not disclose vulnerabilities publicly until they have been reviewed and addressed.
 
