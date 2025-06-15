@@ -2,20 +2,29 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+We actively maintain and provide security updates for the following versions:
 
 | Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+|:---------|:--------------------|
+| 5.1.x   | ✅ Supported         |
+| 5.0.x   | ❌ Not Supported     |
+| 4.0.x   | ✅ Supported         |
+| < 4.0   | ❌ Not Supported     |
+
+If you’re using an unsupported version, please upgrade to a supported version for continued security fixes and improvements.
+
+---
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+If you discover a security vulnerability in **Support.js-Framework**, we strongly encourage responsible disclosure.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+- Please report any vulnerabilities by opening a confidential issue at: [https://github.com/Support.js/Framework/security/advisories](https://github.com/Support.js/Framework/security/advisories)
+- You may also email us directly at: **security@supportjs.dev**
+- We aim to respond within **72 hours** and will work with you to assess the issue and plan a fix if necessary.
+
+**Note:** Do not disclose vulnerabilities publicly until they have been reviewed and addressed.
+
+---
+
+Thank you for helping make Support.js-Framework more secure for everyone! 🚀
