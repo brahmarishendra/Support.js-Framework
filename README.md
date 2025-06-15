@@ -9,7 +9,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
 A comprehensive JavaScript utility framework with 50+ built-in functions and optional framework integrations for **React**, **Next.js**, and **Angular**. Zero dependencies, full TypeScript support, and tree-shaking optimized. 
-Any can modify this Open source Framework! It's running locally.
+Anyone can modify this Open source Framework! It's running locally.
 
 ## 🚀 Quick Start - Install Everything in One Command
 
