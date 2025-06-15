@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support.js React Example</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .example-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .window-size {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .storage-demo {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .storage-demo input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Mock support.js React components and hooks for demo
+        const { useState, useEffect } = React;
+
+        // Mock useWindowSize hook
+        function useWindowSize() {
+            const [windowSize, setWindowSize] = useState({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+
+            useEffect(() => {
+                function handleResize() {
+                    setWindowSize({
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    });
+                }
+
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            return windowSize;
+        }
+
+        // Mock useLocalStorage hook
+        function useLocalStorage(key, initialValue) {
+            const [storedValue, setStoredValue] = useState(() => {
+                try {
+                    const item = window.localStorage.getItem(key);
+                    return item ? JSON.parse(item) : initialValue;
+                } catch (error) {
+                    return initialValue;
+                }
+            });
+
+            const setValue = (value) => {
+                try {
+                    setStoredValue(value);
+                    window.localStorage.setItem(key, JSON.stringify(value));
+                } catch (error) {
+                    console.error('Error saving to localStorage:', error);
+                }
+            };
+
+            return [storedValue, setValue];
+        }
+
+        // Mock CustomButton component
+        function CustomButton({ 
+            variant = 'primary', 
+            size = 'medium', 
+            loading = false, 
+            disabled = false,
+            children, 
+            onClick,
+            ...props 
+        }) {
+            const baseStyles = {
+                border: 'none',
+                borderRadius: '6px',
+                cursor: disabled || loading ? 'not-allowed' : 'pointer',
+                fontWeight: '500',
+                transition: 'all 0.2s ease-in-out',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                opacity: disabled || loading ? 0.6 : 1
+            };
+
+            const variantStyles = {
+                primary: { backgroundColor: '#007bff', color: 'white' },
+                secondary: { backgroundColor: '#6c757d', color: 'white' },
+                danger: { backgroundColor: '#dc3545', color: 'white' },
+                success: { backgroundColor: '#28a745', color: 'white' }
+            };
+
+            const sizeStyles = {
+                small: { padding: '6px 12px', fontSize: '12px' },
+                medium: { padding: '8px 16px', fontSize: '14px' },
+                large: { padding: '12px 24px', fontSize: '16px' }
+            };
+
+            const combinedStyles = {
+                ...baseStyles,
+                ...variantStyles[variant],
+                ...sizeStyles[size]
+            };
+
+            return (
+                <button
+                    style={combinedStyles}
+                    disabled={disabled || loading}
+                    onClick={onClick}
+                    {...props}
+                >
+                    {loading && <span>⏳</span>}
+                    {children}
+                </button>
+            );
+        }
+
+        // Mock utility functions
+        const dateUtils = {
+            formatDate: (date, format) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return format.replace('YYYY', year).replace('MM', month).replace('DD', day);
+            },
+            getRelativeTime: (date) => {
+                const now = new Date();
+                const diffMs = now - date;
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                if (diffHours < 1) return 'just now';
+                if (diffHours < 24) return `${diffHours} hours ago`;
+                return `${Math.floor(diffHours / 24)} days ago`;
+            }
+        };
+
+        const stringUtils = {
+            toCamelCase: (str) => str.replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : ''),
+            truncate: (str, length) => str.length > length ? str.slice(0, length) + '...' : str
+        };
+
+        // Example App Component
+        function App() {
+            const { width, height } = useWindowSize();
+            const [name, setName] = useLocalStorage('demo-name', '');
+            const [loading, setLoading] = useState(false);
+
+            const handleAsyncAction = () => {
+                setLoading(true);
+                setTimeout(() => setLoading(false), 2000);
+            };
+
+            const currentDate = new Date();
+            const pastDate = new Date(Date.now() - 2 * 60 * 60 * 1000); // 2 hours ago
+
+            return (
+                <div>
+                    <h1>Support.js React Example</h1>
+                    <p>This example demonstrates the React components and hooks from support.js library.</p>
+
+                    <div className="example-section">
+                        <h2>🪟 useWindowSize Hook</h2>
+                        <p>Resize the browser window to see the values update:</p>
+                        <div className="window-size">
+                            Window Size: {width} × {height} pixels
+                        </div>
+                    </div>
+
+                    <div className="example-section">
+                        <h2>💾 useLocalStorage Hook</h2>
+                        <p>Your input is automatically saved to localStorage:</p>
+                        <div className="storage-demo">
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter your name..."
+                            />
+                            <span>Stored value: "{name}"</span>
+                        </div>
+                    </div>
+
+                    <div className="example-section">
+                        <h2>🎯 CustomButton Component</h2>
+                        <p>Various button styles and states:</p>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '20px' }}>
+                            <CustomButton variant="primary">Primary</CustomButton>
+                            <CustomButton variant="secondary">Secondary</CustomButton>
+                            <CustomButton variant="success">Success</CustomButton>
+                            <CustomButton variant="danger">Danger</CustomButton>
+                        </div>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '20px' }}>
+                            <CustomButton size="small">Small</CustomButton>
+                            <CustomButton size="medium">Medium</CustomButton>
+                            <CustomButton size="large">Large</CustomButton>
+                        </div>
+                        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                            <CustomButton disabled>Disabled</CustomButton>
+                            <CustomButton 
+                                loading={loading} 
+                                onClick={handleAsyncAction}
+                                variant="primary"
+                            >
+                                {loading ? 'Loading...' : 'Simulate Loading'}
+                            </CustomButton>
+                        </div>
+                    </div>
+
+                    <div className="example-section">
+                        <h2>🛠️ Utility Functions</h2>
+                        <p>Framework-independent utility functions:</p>
+                        
+                        <h3>Date Utils:</h3>
+                        <ul>
+                            <li>Current date: {dateUtils.formatDate(currentDate, 'YYYY-MM-DD')}</li>
+                            <li>Relative time: {dateUtils.getRelativeTime(pastDate)}</li>
+                        </ul>
+
+                        <h3>String Utils:</h3>
+                        <ul>
+                            <li>CamelCase: {stringUtils.toCamelCase('hello-world-example')}</li>
+                            <li>Truncate: {stringUtils.truncate('This is a very long string that will be truncated', 30)}</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        // Render the app
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>

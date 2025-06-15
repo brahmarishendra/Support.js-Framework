@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support.js Angular Example</title>
+    <script src="https://unpkg.com/@angular/core@15/bundles/core.umd.min.js"></script>
+    <script src="https://unpkg.com/@angular/common@15/bundles/common.umd.min.js"></script>
+    <script src="https://unpkg.com/@angular/platform-browser@15/bundles/platform-browser.umd.min.js"></script>
+    <script src="https://unpkg.com/@angular/platform-browser-dynamic@15/bundles/platform-browser-dynamic.umd.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .example-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .log-output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .service-demo {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .interceptor-status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+        }
+        .idle {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Support.js Angular Example</h1>
+        <p>This example demonstrates the Angular services from support.js library.</p>
+
+        <div class="example-section">
+            <h2>📝 Logger Service</h2>
+            <p>Click the buttons below to generate different types of log messages:</p>
+            
+            <div class="button-group">
+                <button onclick="logInfo()">Log Info</button>
+                <button onclick="logWarn()">Log Warning</button>
+                <button onclick="logError()">Log Error</button>
+                <button onclick="logDebug()">Log Debug</button>
+                <button onclick="clearLogs()">Clear Logs</button>
+            </div>
+
+            <div class="service-demo">
+                <strong>Logger Configuration:</strong><br>
+                Current Level: <span id="log-level">INFO</span><br>
+                Total Logs: <span id="log-count">0</span>
+            </div>
+
+            <div class="log-output" id="log-output">
+                Console logs will appear here...
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🌐 HTTP Interceptor Service</h2>
+            <p>Simulate HTTP requests to see the interceptor in action:</p>
+            
+            <div class="button-group">
+                <button onclick="simulateSuccess()">Success Request</button>
+                <button onclick="simulateError()">Error Request</button>
+                <button onclick="simulateMultiple()">Multiple Requests</button>
+            </div>
+
+            <div class="interceptor-status" id="interceptor-status" class="idle">
+                Status: Idle (0 active requests)
+            </div>
+
+            <div class="service-demo">
+                <strong>Interceptor Features:</strong><br>
+                ✅ Request/Response Logging<br>
+                ✅ Loading State Management<br>
+                ✅ Error Handling<br>
+                ✅ Request Tracking
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h2>🛠️ Utility Functions Integration</h2>
+            <p>The Angular services can work with the utility functions:</p>
+            
+            <div class="service-demo">
+                <strong>Example Integration:</strong><br>
+                <span id="formatted-date">Loading...</span><br>
+                <span id="processed-string">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock Logger Service
+        class LoggerService {
+            constructor() {
+                this.logLevel = 2; // INFO
+                this.logs = [];
+                this.maxLogEntries = 100;
+            }
+
+            setLogLevel(level) {
+                this.logLevel = level;
+                document.getElementById('log-level').textContent = this.getLevelName(level);
+            }
+
+            getLevelName(level) {
+                const names = ['ERROR', 'WARN', 'INFO', 'DEBUG'];
+                return names[level] || 'UNKNOWN';
+            }
+
+            error(message, ...args) {
+                this.log(0, message, args);
+            }
+
+            warn(message, ...args) {
+                this.log(1, message, args);
+            }
+
+            info(message, ...args) {
+                this.log(2, message, args);
+            }
+
+            debug(message, ...args) {
+                this.log(3, message, args);
+            }
+
+            log(level, message, args) {
+                if (level > this.logLevel) return;
+
+                const logEntry = {
+                    timestamp: new Date(),
+                    level,
+                    message,
+                    args
+                };
+
+                this.logs.push(logEntry);
+                if (this.logs.length > this.maxLogEntries) {
+                    this.logs.shift();
+                }
+
+                this.outputToConsole(logEntry);
+                this.updateLogDisplay();
+            }
+
+            outputToConsole(logEntry) {
+                const timestamp = logEntry.timestamp.toISOString();
+                const levelName = this.getLevelName(logEntry.level);
+                const prefix = `[${timestamp}] [${levelName}]`;
+
+                const output = `${prefix} ${logEntry.message}`;
+                
+                switch (logEntry.level) {
+                    case 0: console.error(output, ...(logEntry.args || [])); break;
+                    case 1: console.warn(output, ...(logEntry.args || [])); break;
+                    case 2: console.info(output, ...(logEntry.args || [])); break;
+                    case 3: console.debug(output, ...(logEntry.args || [])); break;
+                }
+            }
+
+            updateLogDisplay() {
+                const output = document.getElementById('log-output');
+                const count = document.getElementById('log-count');
+                
+                count.textContent = this.logs.length;
+                
+                const recent = this.logs.slice(-10).map(log => {
+                    const time = log.timestamp.toLocaleTimeString();
+                    const level = this.getLevelName(log.level);
+                    return `[${time}] [${level}] ${log.message}`;
+                }).join('\n');
+                
+                output.textContent = recent || 'No logs yet...';
+            }
+
+            clearLogs() {
+                this.logs = [];
+                this.updateLogDisplay();
+            }
+        }
+
+        // Mock HTTP Interceptor Service
+        class HttpInterceptorService {
+            constructor() {
+                this.activeRequests = 0;
+                this.logger = logger;
+            }
+
+            simulateRequest(url, shouldFail = false) {
+                this.activeRequests++;
+                this.updateLoadingState();
+                
+                this.logger.debug(`HTTP Request: GET ${url}`);
+
+                // Simulate network delay
+                setTimeout(() => {
+                    if (shouldFail) {
+                        this.logger.error(`HTTP Error: GET ${url} (404) - Not Found`);
+                    } else {
+                        this.logger.debug(`HTTP Response: GET ${url} (200) - Success`);
+                    }
+                    
+                    this.activeRequests--;
+                    this.updateLoadingState();
+                }, 1000 + Math.random() * 2000);
+            }
+
+            updateLoadingState() {
+                const status = document.getElementById('interceptor-status');
+                const isLoading = this.activeRequests > 0;
+                
+                status.className = `interceptor-status ${isLoading ? 'loading' : 'idle'}`;
+                status.textContent = `Status: ${isLoading ? 'Loading' : 'Idle'} (${this.activeRequests} active requests)`;
+            }
+        }
+
+        // Mock utility functions
+        const dateUtils = {
+            formatDate: (date, format) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                
+                return format
+                    .replace('YYYY', year)
+                    .replace('MM', month)
+                    .replace('DD', day)
+                    .replace('HH', hours)
+                    .replace('mm', minutes);
+            }
+        };
+
+        const stringUtils = {
+            toCamelCase: (str) => str.replace(/[-_\s]+(.)?/g, (_, c) => c ? c.toUpperCase() : ''),
+            capitalize: (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+        };
+
+        // Initialize services
+        const logger = new LoggerService();
+        const httpInterceptor = new HttpInterceptorService();
+
+        // Set up initial state
+        logger.setLogLevel(2); // INFO level
+
+        // Initialize utility examples
+        function initUtilityExamples() {
+            const now = new Date();
+            const formattedDate = dateUtils.formatDate(now, 'YYYY-MM-DD HH:mm');
+            const processedString = stringUtils.capitalize(stringUtils.toCamelCase('angular-service-example'));
+            
+            document.getElementById('formatted-date').textContent = `Current time: ${formattedDate}`;
+            document.getElementById('processed-string').textContent = `Processed string: "${processedString}"`;
+        }
+
+        // Global functions for buttons
+        function logInfo() {
+            logger.info('This is an info message', { data: 'example' });
+        }
+
+        function logWarn() {
+            logger.warn('This is a warning message');
+        }
+
+        function logError() {
+            logger.error('This is an error message', new Error('Example error'));
+        }
+
+        function logDebug() {
+            logger.debug('This is a debug message', { timestamp: new Date() });
+        }
+
+        function clearLogs() {
+            logger.clearLogs();
+        }
+
+        function simulateSuccess() {
+            httpInterceptor.simulateRequest('/api/users/1', false);
+        }
+
+        function simulateError() {
+            httpInterceptor.simulateRequest('/api/missing-endpoint', true);
+        }
+
+        function simulateMultiple() {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    httpInterceptor.simulateRequest(`/api/data/${i}`, Math.random() > 0.7);
+                }, i * 200);
+            }
+        }
+
+        // Initialize on page load
+        initUtilityExamples();
+        logger.info('Angular example initialized');
+    </script>
+</body>
+</html>
